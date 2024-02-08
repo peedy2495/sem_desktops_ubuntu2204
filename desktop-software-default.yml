@@ -1,3 +1,8 @@
-- hosts: ubuntu-test
+- hosts: all
+  gather_facts: true
+  vars:
+    ansible_become: yes
+    ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
+
   roles:
     - role: ansible-desktop-default-software
