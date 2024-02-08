@@ -1,0 +1,3 @@
+- hosts: ubuntu-test
+  roles:
+    - role: ansible-desktop-default-software
