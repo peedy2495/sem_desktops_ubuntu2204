@@ -5,4 +5,4 @@
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
   roles:
-    - role: ansible-desktop-defeloper-software
+    - role: ansible-desktop-developer-software
