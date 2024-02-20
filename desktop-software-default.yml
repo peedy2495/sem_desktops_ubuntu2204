@@ -4,5 +4,11 @@
     ansible_become: yes
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
+  pre_tasks:
+    - name: reload external roles
+      shell: 'export HOME=/tmp/semaphore; ansible-galaxy install -r roles/requirements.yml --force'
+    delegate_to: localhost
+    become: false
+
   roles:
     - role: ansible-desktop-default-software
