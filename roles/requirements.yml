@@ -5,3 +5,19 @@
 - src: "https://github.com/peedy2495/ansible-desktop-developer-software.git"
   scm: git
   version: main
+
+- src: "https://github.com/peedy2495/ansible-ldap-sssd.git"
+  scm: git
+  version: main
+
+- src: "https://github.com/peedy2495/ansible-hardening-addition.git"
+  scm: git
+  version: main
+
+- src: "https://github.com/mablanco/ansible-antirootkits.git"
+  scm: git
+  version: main
+
+- src: "https://github.com/geerlingguy/ansible-role-clamav.git"
+  scm: git
+  version: main
