@@ -5,4 +5,3 @@
 - src: "https://github.com/peedy2495/ansible-desktop-developer-software.git"
   scm: git
   version: main
-  
