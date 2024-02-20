@@ -4,6 +4,14 @@
     ansible_become: yes
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
+    antirootkits_mail_from: "root@localhost"
+    antirootkits_mail_to: "root@localhost"
+    
+    rkhunter: true
+    chkrootkit: true
+    unhide: true
+    shelldetector: false
+
   roles:
     - role: ansible-desktop-default-software
     - role: ansible-desktop-developer-software
