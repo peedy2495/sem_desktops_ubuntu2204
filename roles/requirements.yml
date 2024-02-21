@@ -24,4 +24,4 @@
 
 - src: "https://github.com/peedy2495/ansible-apparmor-libreoffice.git"
   scm: git
-  version: master
+  version: main
