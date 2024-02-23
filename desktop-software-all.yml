@@ -30,9 +30,6 @@
     - ansible.builtin.set_fact:
         nexusPwd: "{{ nexusPwd }}"
 
-    - debug:
-        var: nexusPwd
-
   roles:
     - role: ansible-nexus-repositories
     - role: ansible-desktop-default-software
