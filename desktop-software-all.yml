@@ -28,6 +28,7 @@
       no_log: true
 
   roles:
+    - role: ansible-nexus-repositories
     - role: ansible-desktop-default-software
     - role: ansible-desktop-developer-software
     - role: ansible-antirootkits
