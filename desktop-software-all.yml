@@ -18,6 +18,15 @@
     clamav_offlinedb: yes
     clamav_freshclam_daemon_state: stopped
 
+  pre_tasks:
+    - name: import repositories
+      ansible.builtin.set_fact:
+        nexus_repos: "{{ lookup('file','vars/nexus_repos.json') | from_json }}"
+
+    - name: import credentials
+      include_vars: vars/creds.yml
+      no_log: true
+
   roles:
     - role: ansible-desktop-default-software
     - role: ansible-desktop-developer-software

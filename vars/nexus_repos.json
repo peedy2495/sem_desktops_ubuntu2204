@@ -1,0 +1,782 @@
+[ {
+  "name" : "ubuntu-jammy-ppa-golang-backports",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy-ppa-golang-backports",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "https://ppa.launchpadcontent.net/longsleep/golang-backports/ubuntu/",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "raw-api.github",
+  "url" : "http://192.168.123.180:8081/repository/raw-api.github",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "raw-github",
+    "strictContentTypeValidation" : false,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : null,
+  "proxy" : {
+    "remoteUrl" : "https://api.github.com",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "raw" : {
+    "contentDisposition" : "ATTACHMENT"
+  },
+  "format" : "raw",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-microsoft-vscode",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-microsoft-vscode",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "microsoft-vscode",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "stable",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "https://packages.microsoft.com/repos/vscode",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "google-chrome",
+  "url" : "http://192.168.123.180:8081/repository/google-chrome",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "google",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "stable",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "http://dl.google.com/linux/chrome/deb",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : null,
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-jammy-backports",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy-backports",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy-backports",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "http://de.archive.ubuntu.com/ubuntu",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : null,
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-jammy",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "http://de.archive.ubuntu.com/ubuntu",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : null,
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-archive",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-archive",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-misc",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : null,
+  "proxy" : {
+    "remoteUrl" : "http://archive.ubuntu.com/ubuntu/",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : null,
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "raw" : {
+    "contentDisposition" : "ATTACHMENT"
+  },
+  "format" : "raw",
+  "type" : "proxy"
+}, {
+  "name" : "clamav-db",
+  "url" : "http://192.168.123.180:8081/repository/clamav-db",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "clam-db",
+    "strictContentTypeValidation" : false,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "component" : {
+    "proprietaryComponents" : false
+  },
+  "raw" : {
+    "contentDisposition" : "ATTACHMENT"
+  },
+  "format" : "raw",
+  "type" : "hosted"
+}, {
+  "name" : "ubuntu-jammy-ppa-mozillateam",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy-ppa-mozillateam",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-nodejs",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-nodejs",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-nodesource",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : null,
+  "apt" : {
+    "distribution" : "nodistro",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "https://deb.nodesource.com/node_20.x",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "raw-github",
+  "url" : "http://192.168.123.180:8081/repository/raw-github",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "raw-github",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : null,
+  "proxy" : {
+    "remoteUrl" : "https://github.com",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "raw" : {
+    "contentDisposition" : "ATTACHMENT"
+  },
+  "format" : "raw",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-releases",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-releases",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-releases",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : null,
+  "proxy" : {
+    "remoteUrl" : "https://releases.ubuntu.com/releases",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "raw" : {
+    "contentDisposition" : "ATTACHMENT"
+  },
+  "format" : "raw",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-jammy-ppa-ansible",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy-ppa-ansible",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "https://ppa.launchpadcontent.net/ansible/ansible/ubuntu/",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-jammy-docker-ce",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy-docker-ce",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "https://download.docker.com/linux/ubuntu",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-kubernetes",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-kubernetes",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "google-apt",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "kubernetes-xenial",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "https://packages.cloud.google.com/apt/",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-jammy-ppa-ubuntugis",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy-ppa-ubuntugis",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "https://ppa.launchpadcontent.net/ubuntugis/ppa/ubuntu/",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-jammy-updates",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy-updates",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy-updates",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "http://de.archive.ubuntu.com/ubuntu",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : null,
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "raw-githubusercontent",
+  "url" : "http://192.168.123.180:8081/repository/raw-githubusercontent",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "raw-github",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : null,
+  "proxy" : {
+    "remoteUrl" : "https://raw.githubusercontent.com",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "raw" : {
+    "contentDisposition" : "ATTACHMENT"
+  },
+  "format" : "raw",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-jammy-security",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy-security",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy-security",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "http://security.ubuntu.com/ubuntu",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : null,
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-jammy-ppa-ansible-9",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy-ppa-ansible-9",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "https://ppa.launchpadcontent.net/ansible/ansible-9/ubuntu",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
+  "name" : "ubuntu-jammy-ppa-ansible-6",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy-ppa-ansible-6",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "https://ppa.launchpadcontent.net/ansible/ansible-6/ubuntu",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+} ]
