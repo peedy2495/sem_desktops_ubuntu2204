@@ -10,9 +10,9 @@
     - name: upgrade system
       block:
         - name: killing any running update process
-          shell: pkill apt-get; pkill dpkg; sleep 2
+          ansible.builtin.shell: pkill apt-get; pkill dpkg; sleep 2
         - name: upgrading
-          apt:
+          ansible.builtin.apt:
             update_cache: yes
             upgrade: yes
           register: apt_upgrade
@@ -20,6 +20,6 @@
           until: apt_upgrade is success
 
     - name: autoremove orphanned packages
-      apt:
+      ansible.builtin.apt:
         autoremove: yes
         purge: yes
