@@ -26,6 +26,9 @@
     - name: import credentials
       include_vars: vars/creds.yml
       no_log: true
+    
+    - debug:
+        var: foo
 
   roles:
     - role: sem_globals
