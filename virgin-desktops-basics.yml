@@ -1,8 +1,33 @@
 - hosts: all
   gather_facts: true
   vars:
+    # ssh stuff
     ansible_become: yes
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
+    # role: ansible-antirootkits
+    antirootkits_mail_from: "root@localhost"
+    antirootkits_mail_to: "root@localhost"
+
+    rkhunter: true
+    chkrootkit: true
+    unhide: true
+    shelldetector: false
+
+    # role: ansible-role-clamav
+    clamav_offlinedb: yes
+    clamav_freshclam_daemon_state: stopped
+
+  pre_tasks:
+    - name: import repositories
+      ansible.builtin.set_fact:
+        nexusRepos: "{{ lookup('file','vars/nexus_repos.json') | from_json }}"
+
   roles:
+    - role: sem_globals
+    - role: ansible-nexus-repositories
     - role: ansible-desktop-default-software
+    - role: ansible-antirootkits
+    - role: ansible-role-clamav
+    - role: ansible-hardening-addition
+    - role: ansible-apparmor-libreoffice

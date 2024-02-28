@@ -23,10 +23,6 @@
       ansible.builtin.set_fact:
         nexusRepos: "{{ lookup('file','vars/nexus_repos.json') | from_json }}"
 
-    - name: import credentials
-      include_vars: vars/creds.yml
-      no_log: true
-
   roles:
     - role: sem_globals
     - role: ansible-nexus-repositories
@@ -35,4 +31,3 @@
     - role: ansible-antirootkits
     - role: ansible-role-clamav
     - role: ansible-hardening-addition
-    - role: ansible-apparmor-libreoffice
