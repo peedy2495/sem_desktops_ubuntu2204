@@ -313,6 +313,47 @@
   "format" : "apt",
   "type" : "proxy"
 }, {
+  "name" : "ubuntu-jammy-ppa-helix",
+  "url" : "http://192.168.123.180:8081/repository/ubuntu-jammy-ppa-helix",
+  "online" : true,
+  "storage" : {
+    "blobStoreName" : "ubuntu-jammy",
+    "strictContentTypeValidation" : true,
+    "writePolicy" : "ALLOW"
+  },
+  "cleanup" : {
+    "policyNames" : [ "18-weeks-usage" ]
+  },
+  "apt" : {
+    "distribution" : "jammy",
+    "flat" : false
+  },
+  "proxy" : {
+    "remoteUrl" : "http://ppa.launchpadcontent.net/maveonair/helix-editor/ubuntu",
+    "contentMaxAge" : 1440,
+    "metadataMaxAge" : 1440
+  },
+  "negativeCache" : {
+    "enabled" : true,
+    "timeToLive" : 1440
+  },
+  "httpClient" : {
+    "blocked" : false,
+    "autoBlock" : true,
+    "connection" : {
+      "retries" : null,
+      "userAgentSuffix" : null,
+      "timeout" : null,
+      "enableCircularRedirects" : false,
+      "enableCookies" : false,
+      "useTrustStore" : false
+    },
+    "authentication" : null
+  },
+  "routingRuleName" : null,
+  "format" : "apt",
+  "type" : "proxy"
+}, {
   "name" : "ubuntu-nodejs",
   "url" : "http://192.168.123.180:8081/repository/ubuntu-nodejs",
   "online" : true,
