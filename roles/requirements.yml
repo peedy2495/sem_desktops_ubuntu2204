@@ -29,3 +29,7 @@
 - src: "https://github.com/peedy2495/ansible-nexus-repositories.git"
   scm: git
   version: main
+
+- src: "https://github.com/peedy2495/ansible-gfx.git"
+  scm: git
+  version: main
