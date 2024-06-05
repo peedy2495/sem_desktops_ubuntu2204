@@ -18,17 +18,11 @@
     clamav_offlinedb: yes
     clamav_freshclam_daemon_state: stopped
 
-  pre_tasks:
-    - name: import repositories
-      ansible.builtin.set_fact:
-        nexusRepos: "{{ lookup('file','vars/nexus_repos.json') | from_json }}"
-
   roles:
     - role: sem_globals
-    - role: ansible-nexus-repositories
     - role: ansible-gfx
-    - role: ansible-ldap-sssd
     - role: ansible-desktop-default-software
+    - role: ansible-desktop-developer-software
     - role: ansible-antirootkits
     - role: ansible-role-clamav
     - role: ansible-hardening-addition

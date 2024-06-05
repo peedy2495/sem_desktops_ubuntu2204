@@ -27,6 +27,7 @@
     - role: sem_globals
     - role: ansible-nexus-repositories
     - role: ansible-gfx
+    - role: ansible-ldap-sssd
     - role: ansible-desktop-default-software
     - role: ansible-desktop-developer-software
     - role: ansible-antirootkits
