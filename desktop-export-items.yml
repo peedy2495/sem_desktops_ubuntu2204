@@ -1,0 +1,9 @@
+- name: load requirements for git
+  ansible.builtin.include_vars:
+    file: roles/requirements.yml
+    name: git_repos
+
+- name: testing
+  ansible.builtin.debug:
+    msg: "repo: {{ src }}"
+  with_items: "{{ git_repos }}"
