@@ -6,10 +6,14 @@
 
   tasks:
 
-    - name: load requirements for git
-      ansible.builtin.include_vars:
-        file: roles/requirements.yml
-        name: git_repos
+    - name: Load requirements for git
+      ansible.builtin.slurp:
+        src: roles/requirements.yml
+      register: requirements_content
+
+    - name: Parse requirements.yml
+      set_fact:
+        git_repos: "{{ requirements_content['content'] | b64decode | from_yaml }}"
 
     - name: testing
       ansible.builtin.debug:
