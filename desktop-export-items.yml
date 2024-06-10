@@ -8,7 +8,7 @@
 
     - name: Load requirements for git
       ansible.builtin.slurp:
-        src: roles/requirements.yml
+        src: "{{ playbook_dir }}/roles/requirements.yml"
       register: requirements_content
 
     - name: Parse requirements.yml
