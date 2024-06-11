@@ -32,9 +32,9 @@
         mode: 0777
 
     - name: git - clone repositories
-      ansible.builtin.debug:
-        #repo: "{{ item.src }}"
-        #version: "{{ item.version }}"
-        msg: "/tmp/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
+      ansible.builtin.git:
+        repo: "{{ item.src }}"
+        version: "{{ item.version }}"
+        dest: "/tmp/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
       with_items: "{{ git_repos }}"
       when: item.scm == 'git'
