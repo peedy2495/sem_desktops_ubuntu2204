@@ -33,7 +33,10 @@
 
     - name: git - cocatentate the lists
       ansible.builtin.set_fact:
-        git_repos: "{{ git_playbooks + git_required }}"
+        git_repos: "{{
+          playbooks_content['content'] | b64decode | from_yaml + 
+          requirements_content['content'] | b64decode | from_yaml
+          }}"
 
     - name: gite - testing reqirements
       ansible.builtin.debug:
