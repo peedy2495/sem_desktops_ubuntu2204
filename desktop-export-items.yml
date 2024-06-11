@@ -6,17 +6,36 @@
 
   tasks:
 
-    - name: Load requirements for git
+    - name: git - load playbooks
+      ansible.builtin.slurp:
+        src: "{{ playbook_dir }}/files/playbooks.yml"
+      delegate_to: localhost
+      register: playbooks_content
+
+    - name: git - parse playbooks.yml
+      set_fact:
+        git_playbooks: "{{ playbooks_content['content'] | b64decode | from_yaml }}"
+
+    # - name: git - testing playbooks
+      # ansible.builtin.debug:
+        # msg: "repo: {{ item.src }}"
+      # with_items: "{{ git_playbooks }}"
+
+    - name: git - load requirements
       ansible.builtin.slurp:
         src: "{{ playbook_dir }}/roles/requirements.yml"
       delegate_to: localhost
       register: requirements_content
 
-    - name: Parse requirements.yml
+    - name: git - parse requirements.yml
       set_fact:
-        git_repos: "{{ requirements_content['content'] | b64decode | from_yaml }}"
+        git_required: "{{ requirements_content['content'] | b64decode | from_yaml }}"
 
-    - name: testing
+    - name: git - cocatentate the lists
+      ansible.builtin.set_fact:
+        git_repos: "{{ git_playbooks + git_required }}"
+
+    - name: gite - testing reqirements
       ansible.builtin.debug:
         msg: "repo: {{ item.src }}"
       with_items: "{{ git_repos }}"
