@@ -18,5 +18,5 @@
 
     - name: testing
       ansible.builtin.debug:
-        msg: "repo: {{ src }}"
+        msg: "repo: {{ item.src }}"
       with_items: "{{ git_repos }}"
