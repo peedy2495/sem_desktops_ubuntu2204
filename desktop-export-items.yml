@@ -3,6 +3,7 @@
   vars:
     ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
+    gh_ssh_key: "{{ lookup('env', 'SEMAPHORE_KEY_gh_peedy2495') }}"
 
   tasks:
 
@@ -31,10 +32,15 @@
         state: directory
         mode: 0777
 
+    - debug:
+        msg: "{{ gh_ssh_key }}"
+
     - name: git - clone repositories
       ansible.builtin.git:
         repo: "{{ item.src }}"
         version: "{{ item.version }}"
         dest: "/tmp/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
+        accept_hostkey: yes
+        key_file: "{{ gh_ssh_key }}"
       with_items: "{{ git_repos }}"
       when: item.scm == 'git'
