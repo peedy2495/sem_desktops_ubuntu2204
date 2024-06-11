@@ -9,6 +9,7 @@
     - name: Load requirements for git
       ansible.builtin.slurp:
         src: "{{ playbook_dir }}/roles/requirements.yml"
+      delegate_to: localhost
       register: requirements_content
 
     - name: Parse requirements.yml
