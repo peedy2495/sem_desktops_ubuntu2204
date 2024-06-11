@@ -12,24 +12,11 @@
       delegate_to: localhost
       register: playbooks_content
 
-    - name: git - parse playbooks.yml
-      set_fact:
-        git_playbooks: "{{ playbooks_content['content'] | b64decode | from_yaml }}"
-
-    # - name: git - testing playbooks
-      # ansible.builtin.debug:
-        # msg: "repo: {{ item.src }}"
-      # with_items: "{{ git_playbooks }}"
-
     - name: git - load requirements
       ansible.builtin.slurp:
         src: "{{ playbook_dir }}/roles/requirements.yml"
       delegate_to: localhost
       register: requirements_content
-
-    - name: git - parse requirements.yml
-      set_fact:
-        git_required: "{{ requirements_content['content'] | b64decode | from_yaml }}"
 
     - name: git - cocatentate the lists
       ansible.builtin.set_fact:
@@ -38,7 +25,16 @@
           requirements_content['content'] | b64decode | from_yaml
           }}"
 
-    - name: gite - testing reqirements
-      ansible.builtin.debug:
-        msg: "repo: {{ item.src }}"
+    - name: git - create tempdir for caching
+      ansible.builtin.file:
+        path: /tmp/git
+        state: directory
+        mode: 0777
+
+    - name: git - clone repositories
+      ansible.builtin.git:
+        repo: "{{ item.src }}"
+        version: "{{ item.version }}"
+        dest: "/tmp/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
       with_items: "{{ git_repos }}"
+      when: item.scm == 'git'
