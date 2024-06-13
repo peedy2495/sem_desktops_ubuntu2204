@@ -87,6 +87,7 @@
 
     - name: export - storage - mount
       ansible.builtin.command: "mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
+      become: yes
 
     - name: export - storage - create infra export dir
       ansible.builtin.file:
@@ -102,4 +103,5 @@
 
     - name: export - storage - unmount
       ansible.builtin.command: "umount /mnt"
+      become: yes
     
