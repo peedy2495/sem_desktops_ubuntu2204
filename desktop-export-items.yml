@@ -87,10 +87,7 @@
     - name: export - storage - gather facts
       ansible.builtin.setup:
         gather_subset:
-          - hardware
-          - network
-          - virtual
-          - mount_points
+          - mounts
 
     - name: export - storage - mount
       ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
