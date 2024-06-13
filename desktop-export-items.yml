@@ -4,6 +4,7 @@
     ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
     keyFilePath: "/tmp/semaphore/.ssh/gh_ansible-globals"
+    gitlab_remote_prefix: "http://gitlab.we.goat/we"
   vars_files:
     - /var/lib/semaphore/data/sec.yml
 
@@ -62,6 +63,14 @@
       ansible.builtin.file:
         path: "{{ keyFilePath }}"
         state: absent
+
+    - name: git - change remote url
+      ansible.builtin.replace:
+        path: "/tmp/export/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}/.git/config"
+        regexp: "{{ item.src }}"
+        replace: "{{ gitlab_rempote_prefix }}/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
+      with_items: "{{ git_repos }}"
+      when: item.scm == 'git'
 
     - name: git - create compressed export archive
       ansible.builtin.archive:
