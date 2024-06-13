@@ -105,6 +105,7 @@
         path: "{{ storage_mnt_path }}/infra"
         state: directory
         mode: 0777
+      become: yes
 
     - name: export - storage - copy archive
       ansible.builtin.copy:
