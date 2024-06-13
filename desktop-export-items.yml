@@ -17,12 +17,16 @@
         src: "{{ playbook_dir }}/files/playbooks.yml"
       delegate_to: localhost
       register: playbooks_content
+      become: yes
+      become_user: semaphore
 
     - name: export - git - load requirements
       ansible.builtin.slurp:
         src: "{{ playbook_dir }}/roles/requirements.yml"
       delegate_to: localhost
       register: requirements_content
+      become: yes
+      become_user: semaphore
 
     - name: export - git - cocatentate the lists
       ansible.builtin.set_fact:
