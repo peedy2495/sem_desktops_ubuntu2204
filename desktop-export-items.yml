@@ -93,6 +93,7 @@
       debug:
         msg: "{{ item.uuid }}"
       with_items: "{{ ansible_mounts }}"
+      when: "{{ item.uuid }}" 'equalto' "{{ storage_uuid }}"
 
     - name: export - storage - mount
       ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
