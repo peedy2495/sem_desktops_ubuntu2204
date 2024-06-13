@@ -5,48 +5,49 @@
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
     keyFilePath: "/tmp/semaphore/.ssh/gh_ansible-globals"
     gitlab_remote_prefix: "http://gitlab.we.goat/we"
+    storage_uuid: "ae321550-7029-4bfd-867e-9b3a51b33789"
   vars_files:
     - /var/lib/semaphore/data/sec.yml
 
   tasks:
 
-    - name: git - load playbooks
+    - name: export - git - load playbooks
       ansible.builtin.slurp:
         src: "{{ playbook_dir }}/files/playbooks.yml"
       delegate_to: localhost
       register: playbooks_content
 
-    - name: git - load requirements
+    - name: export - git - load requirements
       ansible.builtin.slurp:
         src: "{{ playbook_dir }}/roles/requirements.yml"
       delegate_to: localhost
       register: requirements_content
 
-    - name: git - cocatentate the lists
+    - name: export - git - cocatentate the lists
       ansible.builtin.set_fact:
         git_repos: "{{
           playbooks_content['content'] | b64decode | from_yaml + 
           requirements_content['content'] | b64decode | from_yaml
           }}"
 
-    - name: git - create tempdir for caching
+    - name: export - git - create tempdir for caching
       ansible.builtin.file:
         path: /tmp/export/git
         state: directory
         mode: 0777
 
-    - name: create user ssh directory
+    - name: export - git - create user ssh directory
       ansible.builtin.file:
         path: /tmp/semaphore/.ssh
         state: directory
 
-    - name: deploy temporary keyfile
+    - name: export - git - deploy temporary keyfile
       ansible.builtin.copy:
         content: "{{ gh_ssh_key }}"
         dest: "{{ keyFilePath }}"
         mode: 0600
 
-    - name: git - clone repositories
+    - name: export - git - clone repositories
       ansible.builtin.git:
         repo: "{{ item.src }}"
         #version: "{{ item.version }}"
@@ -59,12 +60,12 @@
       with_items: "{{ git_repos }}"
       when: item.scm == 'git'
 
-    - name: remove private key
+    - name: export - git - remove private key
       ansible.builtin.file:
         path: "{{ keyFilePath }}"
         state: absent
 
-    - name: git - change remote url
+    - name: export - git - change remote url
       ansible.builtin.replace:
         path: "/tmp/export/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}/.git/config"
         regexp: "{{ item.src }}"
@@ -72,8 +73,37 @@
       with_items: "{{ git_repos }}"
       when: item.scm == 'git'
 
-    - name: git - create compressed export archive
+    - name: export - git - create compressed export archive
       ansible.builtin.archive:
         path:
           - /tmp/export/git
         dest: /tmp/export/trans_infra.tgz
+
+    - name: export - git - cleanup
+      ansible.builtin.file:
+        path: /tmp/export/git
+        state: absent
+
+    - name: export - storage - mount
+      ansible.posix.mount:
+        path: /mnt
+        src: "UUID={{ storage_uuid }}"
+        state: mounted
+
+    - name: export - storage - create infra export dir
+      ansible.builtin.file:
+        path: /mnt/infra
+        state: directory
+        mode: 0777
+
+    - name: export - storage - copy archive
+      ansible.builtin.copy:
+        src: /tmp/export/trans_infra.tgz
+        dest: /mnt/infra/
+        remote_src: yes
+
+    - name: export - storage - mount
+      ansible.posix.mount:
+        path: /mnt
+        state: unmounted
+    
