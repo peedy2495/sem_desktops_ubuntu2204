@@ -75,17 +75,6 @@
       with_items: "{{ git_repos }}"
       when: item.scm == 'git'
 
-    - name: export - git - create compressed export archive
-      ansible.builtin.archive:
-        path:
-          - /tmp/export/git
-        dest: /tmp/export/trans_infra.tgz
-
-    #- name: export - git - cleanup
-    #  ansible.builtin.file:
-    #    path: /tmp/export/git
-    #    state: absent
-
     - name: export - storage - gather facts
       ansible.builtin.setup:
         gather_subset:
@@ -113,16 +102,18 @@
         mode: 0777
       when: storage_uuid_exists
 
-
-    - name: export - storage - copy archive
-      ansible.builtin.copy:
-        src: /tmp/export/trans_infra.tgz
-        dest: "mnt/infra/"
-        remote_src: yes
-        mode: 0666
+    - name: export - git - create compressed export archive
+      ansible.builtin.archive:
+        path:
+          - /tmp/export/git
+        dest: /mnt/infra/trans_infra.tgz
       when: storage_uuid_exists
 
     - name: export - storage - unmount
       ansible.builtin.shell: "sudo umount /mnt"
       when: storage_uuid_exists
-    
+
+    - name: export - git - cleanup
+      ansible.builtin.file:
+        path: /tmp/export/git
+        state: absent
