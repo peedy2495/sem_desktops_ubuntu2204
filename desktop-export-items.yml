@@ -68,7 +68,7 @@
       ansible.builtin.replace:
         path: "/tmp/export/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}/.git/config"
         regexp: "{{ item.src }}"
-        replace: "{{ gitlab_rempote_prefix }}/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
+        replace: "{{ gitlab_remote_prefix }}/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
       with_items: "{{ git_repos }}"
       when: item.scm == 'git'
 
