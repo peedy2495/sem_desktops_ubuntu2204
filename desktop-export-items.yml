@@ -6,7 +6,6 @@
     keyFilePath: "/tmp/semaphore/.ssh/gh_ansible-globals"
     gitlab_remote_prefix: "http://gitlab.we.goat/we"
     storage_uuid: "ae321550-7029-4bfd-867e-9b3a51b33789"
-    storage_fstype: ext4
   vars_files:
     - /var/lib/semaphore/data/sec.yml
 
@@ -85,8 +84,17 @@
         path: /tmp/export/git
         state: absent
 
+    - name: export - storage - gather facts
+      ansible.builtin.setup:
+        gather_subset:
+          - hardware
+          - network
+          - virtual
+          - mount_points
+
     - name: export - storage - mount
       ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
+      when: not ansible_mounts | selectattr('uuid', 'equalto', storage_uuid) | list
 
     - name: export - storage - create infra export dir
       ansible.builtin.file:
