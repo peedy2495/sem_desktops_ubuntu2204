@@ -6,6 +6,7 @@
     keyFilePath: "/tmp/semaphore/.ssh/gh_ansible-globals"
     gitlab_remote_prefix: "http://gitlab.we.goat/we"
     storage_uuid: "ae321550-7029-4bfd-867e-9b3a51b33789"
+    storage_fstype: ext4
   vars_files:
     - /var/lib/semaphore/data/sec.yml
 
@@ -88,6 +89,7 @@
       ansible.posix.mount:
         path: /mnt
         src: "UUID={{ storage_uuid }}"
+        fstype: "{{ storage_fstype }}"
         state: mounted
 
     - name: export - storage - create infra export dir
@@ -102,7 +104,7 @@
         dest: /mnt/infra/
         remote_src: yes
 
-    - name: export - storage - mount
+    - name: export - storage - unmount
       ansible.posix.mount:
         path: /mnt
         state: unmounted
