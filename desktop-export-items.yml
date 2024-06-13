@@ -79,15 +79,19 @@
           - /tmp/export/git
         dest: /tmp/export/trans_infra.tgz
 
-    - name: export - git - cleanup
-      ansible.builtin.file:
-        path: /tmp/export/git
-        state: absent
+    #- name: export - git - cleanup
+    #  ansible.builtin.file:
+    #    path: /tmp/export/git
+    #    state: absent
 
     - name: export - storage - gather facts
       ansible.builtin.setup:
         gather_subset:
           - mounts
+
+    - name: export - storage determine mount
+      debug:
+        msg: "{{ ansible_mounts }}"
 
     - name: export - storage - mount
       ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
