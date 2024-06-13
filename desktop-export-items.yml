@@ -91,7 +91,8 @@
 
     - name: export - storage determine mount
       debug:
-        msg: "{{ ansible_mounts }}"
+        msg: "{{ item.uuid }}"
+      with_items: "{{ ansible_mounts }}"
 
     - name: export - storage - mount
       ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
