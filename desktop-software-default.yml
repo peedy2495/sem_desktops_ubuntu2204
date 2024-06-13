@@ -5,11 +5,6 @@
     ansible_become: yes
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
-  pre_tasks:
-    - name: import repositories
-      ansible.builtin.set_fact:
-        nexusRepos: "{{ lookup('file','vars/nexus_repos.json') | from_json }}"
-
   roles:
     - role: sem_globals
     - role: ansible-nexus-repositories
