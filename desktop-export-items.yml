@@ -6,7 +6,8 @@
     keyFilePath: "/tmp/semaphore/.ssh/gh_ansible-globals"
     gitlab_remote_prefix: "http://gitlab.we.goat/we"
     storage_uuid: "ae321550-7029-4bfd-867e-9b3a51b33789"
-    storage_mnt_path: "/mnt"
+    storage_mnt_usermount: no
+    storage_uuid_exists: no
   vars_files:
     - /var/lib/semaphore/data/sec.yml
 
@@ -85,16 +86,6 @@
     #    path: /tmp/export/git
     #    state: absent
 
-    - name: Verify sudo privileges
-      command: id
-      become: yes
-      become_user: root
-      register: sudo_privileges
-
-    - name: Display sudo privileges
-      debug:
-        var: sudo_privileges
-
     - name: export - storage - gather facts
       ansible.builtin.setup:
         gather_subset:
@@ -102,28 +93,36 @@
 
     - name: export - storage determine mount
       set_fact:
-        storage_mnt_path: "{{ item.mount }}"
+        storage_mnt_usermount: yes
+        storage_uuid_exists: yes
       with_items: "{{ ansible_mounts }}"
       when: item.uuid == storage_uuid
 
+    - name: export - storage - unmount usermount
+      ansible.builtin.shell: "sudo unmount /dev/disk/by-uuid/{{ storage_uuid }}"
+      when: storage_mnt_usermount
+
     - name: export - storage - mount
       ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
-      when: storage_mnt_path == "/mnt"
+      when: storage_uuid_exists
 
     - name: export - storage - create infra export dir
       ansible.builtin.file:
-        path: "{{ storage_mnt_path }}/infra"
+        path: "mnt/infra"
         state: directory
         mode: 0777
-      become: yes
+      when: storage_uuid_exists
+
 
     - name: export - storage - copy archive
       ansible.builtin.copy:
         src: /tmp/export/trans_infra.tgz
-        dest: "{{ storage_mnt_path }}/infra/"
+        dest: "mnt/infra/"
         remote_src: yes
         mode: 0666
+      when: storage_uuid_exists
 
     - name: export - storage - unmount
       ansible.builtin.shell: "sudo umount /mnt"
+      when: storage_uuid_exists
     
