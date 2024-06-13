@@ -7,7 +7,6 @@
     gitlab_remote_prefix: "http://gitlab.we.goat/we"
     storage_uuid: "ae321550-7029-4bfd-867e-9b3a51b33789"
     storage_mnt_usermount: no
-    storage_uuid_exists: no
   vars_files:
     - /var/lib/semaphore/data/sec.yml
 
@@ -80,38 +79,42 @@
         gather_subset:
           - mounts
 
+    - name: export - storage - check for target device
+      stat:
+        path: /dev/disk/by-uuid/{{ storage_uuid }}
+      register: storage_device
+
     - name: export - storage determine mount
       set_fact:
         storage_mnt_usermount: yes
-        storage_uuid_exists: yes
       with_items: "{{ ansible_mounts }}"
       when: item.uuid == storage_uuid
 
     - name: export - storage - unmount usermount
       ansible.builtin.shell: "sudo umount /dev/disk/by-uuid/{{ storage_uuid }}"
-      when: storage_mnt_usermount
+      when: storage_device.stat.exists
 
     - name: export - storage - mount
       ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
-      when: storage_uuid_exists
+      when: storage_device.stat.exists
 
     - name: export - storage - create infra export dir
       ansible.builtin.file:
         path: "mnt/infra"
         state: directory
         mode: 0777
-      when: storage_uuid_exists
+      when: storage_device.stat.exists
 
     - name: export - git - create compressed export archive
       ansible.builtin.archive:
         path:
           - /tmp/export/git
         dest: /mnt/infra/trans_infra.tgz
-      when: storage_uuid_exists
+      when: storage_device.stat.exists
 
     - name: export - storage - unmount
       ansible.builtin.shell: "sudo umount /mnt"
-      when: storage_uuid_exists
+      when: storage_device.stat.exists
 
     - name: export - git - cleanup
       ansible.builtin.file:
