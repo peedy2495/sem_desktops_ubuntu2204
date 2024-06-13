@@ -92,7 +92,7 @@
 
     - name: export - storage - unmount usermount
       ansible.builtin.shell: "sudo umount /dev/disk/by-uuid/{{ storage_uuid }}"
-      when: storage_device.stat.exists
+      when: storage_mnt_usermount
 
     - name: export - storage - mount
       ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
