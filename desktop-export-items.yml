@@ -85,6 +85,16 @@
     #    path: /tmp/export/git
     #    state: absent
 
+    - name: Verify sudo privileges
+      command: id
+      become: yes
+      become_user: root
+      register: sudo_privileges
+
+    - name: Display sudo privileges
+      debug:
+        var: sudo_privileges
+
     - name: export - storage - gather facts
       ansible.builtin.setup:
         gather_subset:
