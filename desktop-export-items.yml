@@ -48,7 +48,7 @@
     - name: git - clone repositories
       ansible.builtin.git:
         repo: "{{ item.src }}"
-        version: "{{ item.version }}"
+        #version: "{{ item.version }}"
         dest: "/tmp/export/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
         accept_hostkey: yes
         key_file: "{{ keyFilePath }}"
