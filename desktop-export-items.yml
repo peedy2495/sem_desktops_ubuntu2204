@@ -30,7 +30,7 @@
 
     - name: git - create tempdir for caching
       ansible.builtin.file:
-        path: /tmp/git
+        path: /tmp/export/git
         state: directory
         mode: 0777
 
@@ -49,7 +49,7 @@
       ansible.builtin.git:
         repo: "{{ item.src }}"
         version: "{{ item.version }}"
-        dest: "/tmp/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
+        dest: "/tmp/export/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
         accept_hostkey: yes
         key_file: "{{ keyFilePath }}"
         clone: true
@@ -62,3 +62,9 @@
       ansible.builtin.file:
         path: "{{ keyFilePath }}"
         state: absent
+
+    - name: git - create compressed export archive
+      ansible.builtin.archive:
+        path:
+          - /tmp/export/git
+        dest: /tmp/export/trans_infra.tgz
