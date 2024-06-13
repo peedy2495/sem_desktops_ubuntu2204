@@ -86,7 +86,7 @@
         state: absent
 
     - name: export - storage - mount
-      ansible.builtin.shell: "mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
+      ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
 
     - name: export - storage - create infra export dir
       ansible.builtin.file:
@@ -101,6 +101,6 @@
         remote_src: yes
 
     - name: export - storage - unmount
-      ansible.builtin.shell: "umount /mnt"
+      ansible.builtin.shell: "sudo umount /mnt"
       become: yes
     
