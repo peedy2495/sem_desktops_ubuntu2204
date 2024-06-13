@@ -104,6 +104,7 @@
         src: /tmp/export/trans_infra.tgz
         dest: /mnt/infra/
         remote_src: yes
+        mode: 0666
 
     - name: export - storage - unmount
       ansible.builtin.shell: "sudo umount /mnt"
