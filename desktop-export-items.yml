@@ -6,6 +6,7 @@
     keyFilePath: "/tmp/semaphore/.ssh/gh_ansible-globals"
     gitlab_remote_prefix: "http://gitlab.we.goat/we"
     storage_uuid: "ae321550-7029-4bfd-867e-9b3a51b33789"
+    storage_mnt_path: "/mnt"
   vars_files:
     - /var/lib/semaphore/data/sec.yml
 
@@ -90,25 +91,25 @@
           - mounts
 
     - name: export - storage determine mount
-      debug:
-        msg: "{{ item.uuid }}"
+      set_fact:
+        storage_mnt_path: "{{ item.mount }}"
       with_items: "{{ ansible_mounts }}"
       when: item.uuid == storage_uuid
 
     - name: export - storage - mount
       ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
-      when: not ansible_mounts | selectattr('uuid', 'equalto', storage_uuid) | list
+      when: storage_mnt_path == "/mnt"
 
     - name: export - storage - create infra export dir
       ansible.builtin.file:
-        path: /mnt/infra
+        path: "{{ storage_mnt_path }}/infra"
         state: directory
         mode: 0777
 
     - name: export - storage - copy archive
       ansible.builtin.copy:
         src: /tmp/export/trans_infra.tgz
-        dest: /mnt/infra/
+        dest: "{{ storage_mnt_path }}/infra/"
         remote_src: yes
         mode: 0666
 
