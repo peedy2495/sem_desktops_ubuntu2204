@@ -86,11 +86,7 @@
         state: absent
 
     - name: export - storage - mount
-      ansible.posix.mount:
-        path: /mnt
-        src: "UUID={{ storage_uuid }}"
-        fstype: "{{ storage_fstype }}"
-        state: mounted
+      ansible.builtin.command: "mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
 
     - name: export - storage - create infra export dir
       ansible.builtin.file:
@@ -105,7 +101,5 @@
         remote_src: yes
 
     - name: export - storage - unmount
-      ansible.posix.mount:
-        path: /mnt
-        state: unmounted
+      ansible.builtin.command: "umount /mnt"
     
