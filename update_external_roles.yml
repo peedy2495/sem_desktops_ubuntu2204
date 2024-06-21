@@ -7,4 +7,3 @@
   pre_tasks:
     - name: reload external roles
       ansible.builtin.shell: 'export HOME=/tmp/semaphore; ansible-galaxy install -r roles/requirements.yml --force'
-      delegate_to: localhost
