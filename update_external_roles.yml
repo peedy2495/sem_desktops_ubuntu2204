@@ -27,7 +27,7 @@
       ansible.builtin.shell: 'export HOME=/tmp/semaphore; ansible-galaxy install -r roles/requirements.yml --force'
 
     - name: reload external roles from playbooks
-      ansible.builtin.shell: 'export HOME=/tmp/semaphore; ansible-galaxy install -r files/playbook.yml --force'
+      ansible.builtin.shell: 'export HOME=/tmp/semaphore; ansible-galaxy install -r files/playbooks.yml --force'
 
     - name: export - git - remove private key
       ansible.builtin.file:
