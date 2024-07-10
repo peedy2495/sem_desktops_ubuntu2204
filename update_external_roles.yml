@@ -23,6 +23,16 @@
         dest: "{{ keyFilePath }}/id_ed25519"
         mode: 0600
 
+    - name: export - git - create ssh config
+      ansible.builtin.blockinfile:
+        path: /home/semaphore/.ssh/config
+        create: true
+        block: |
+          Host *
+              StrictHostKeyChecking no
+              UserKnownHostsFile=/dev/null
+        mode: 0600
+
     - name: reload external roles from requirements
       ansible.builtin.shell: 'export HOME=/tmp/semaphore; ansible-galaxy install -r roles/requirements.yml --force'
 
