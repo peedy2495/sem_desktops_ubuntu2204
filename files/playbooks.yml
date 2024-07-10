@@ -1,11 +1,9 @@
-- src: "git+ssh://git@github.com:peedy2495/sem_globals.git"
-  scm: git
+- src: git+ssh://git@github.com:peedy2495/sem_globals.git
   version: main
 
 - src: "https://github.com/peedy2495/sem_desktops_ubuntu2204.git"
   scm: git
   version: main
 
-- src: "git+ssh://git@github.com:peedy2495/ansible-export_airgappeed.git"
-  scm: git
+- src: git+ssh://git@github.com:peedy2495/ansible-export_airgappeed.git
   version: main
