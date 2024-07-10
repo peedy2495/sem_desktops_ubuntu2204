@@ -34,6 +34,6 @@
   scm: git
   version: main
 
-- src: "https://github.com/peedy2495/ansible-export_airgappeed.git"
+- src: "git@github.com:peedy2495/ansible-export_airgappeed.git"
   scm: git
   version: main
