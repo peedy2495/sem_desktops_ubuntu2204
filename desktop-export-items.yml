@@ -3,120 +3,124 @@
   vars:
     ansible_become: no
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
-    keyFilePath: "/tmp/semaphore/.ssh/gh_ansible-globals"
-    gitlab_remote_prefix: "http://gitlab.we.goat/we"
-    storage_uuid: "ae321550-7029-4bfd-867e-9b3a51b33789"
-    storage_mnt_usermount: no
+    #keyFilePath: "/tmp/semaphore/.ssh/gh_ansible-globals"
+    #gitlab_remote_prefix: "http://gitlab.we.goat/we"
+    #storage_uuid: "ae321550-7029-4bfd-867e-9b3a51b33789"
+    #storage_mnt_usermount: no
   vars_files:
     - /var/lib/semaphore/data/sec.yml
 
-  tasks:
+  roles:
+    - role: ansible-export_airgapped
 
-    - name: export - git - load playbooks
-      ansible.builtin.slurp:
-        src: "{{ playbook_dir }}/files/playbooks.yml"
-      delegate_to: localhost
-      register: playbooks_content
-
-    - name: export - git - load requirements
-      ansible.builtin.slurp:
-        src: "{{ playbook_dir }}/roles/requirements.yml"
-      delegate_to: localhost
-      register: requirements_content
-
-    - name: export - git - cocatentate the lists
-      ansible.builtin.set_fact:
-        git_repos: "{{
-          playbooks_content['content'] | b64decode | from_yaml + 
-          requirements_content['content'] | b64decode | from_yaml
-          }}"
-
-    - name: export - git - create tempdir for caching
-      ansible.builtin.file:
-        path: /tmp/export/git
-        state: directory
-        mode: 0777
-
-    - name: export - git - create user ssh directory
-      ansible.builtin.file:
-        path: /tmp/semaphore/.ssh
-        state: directory
-
-    - name: export - git - deploy temporary keyfile
-      ansible.builtin.copy:
-        content: "{{ gh_ssh_key }}"
-        dest: "{{ keyFilePath }}"
-        mode: 0600
-
-    - name: export - git - clone repositories
-      ansible.builtin.git:
-        repo: "{{ item.src }}"
-        #version: "{{ item.version }}"
-        dest: "/tmp/export/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
-        accept_hostkey: yes
-        key_file: "{{ keyFilePath }}"
-        clone: true
-        force: true
-        update: true
-      with_items: "{{ git_repos }}"
-      when: item.scm == 'git'
-
-    - name: export - git - remove private key
-      ansible.builtin.file:
-        path: "{{ keyFilePath }}"
-        state: absent
-
-    - name: export - git - change remote url
-      ansible.builtin.replace:
-        path: "/tmp/export/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}/.git/config"
-        regexp: "{{ item.src }}"
-        replace: "{{ gitlab_remote_prefix }}/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
-      with_items: "{{ git_repos }}"
-      when: item.scm == 'git'
-
-    - name: export - storage - gather facts
-      ansible.builtin.setup:
-        gather_subset:
-          - mounts
-
-    - name: export - storage - check for target device
-      stat:
-        path: /dev/disk/by-uuid/{{ storage_uuid }}
-      register: storage_device
-
-    - name: export - storage determine mount
-      set_fact:
-        storage_mnt_usermount: yes
-      with_items: "{{ ansible_mounts }}"
-      when: item.uuid == storage_uuid
-
-    - name: export - storage - unmount usermount
-      ansible.builtin.shell: "sudo umount /dev/disk/by-uuid/{{ storage_uuid }}"
-      when: storage_mnt_usermount
-
-    - name: export - storage - mount
-      ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
-      when: storage_device.stat.exists
-
-    - name: export - storage - create infra export dir
-      ansible.builtin.file:
-        path: "mnt/infra"
-        state: directory
-        mode: 0777
-      when: storage_device.stat.exists
-
-    - name: export - git - create compressed export archive
-      ansible.builtin.archive:
-        path:
-          - /tmp/export/git
-        dest: /mnt/infra/trans_infra.tgz
-      when: storage_device.stat.exists
-
-    - name: export - storage - unmount
-      ansible.builtin.shell: "sudo umount /mnt"
-      when: storage_device.stat.exists
-
-    - name: export - git - cleanup
-      ansible.builtin.file:
-        path: /tmp/export/git
-        state: absent
+#  tasks:
+#
+#    - name: export - git - load playbooks
+#      ansible.builtin.slurp:
+#        src: "{{ playbook_dir }}/files/playbooks.yml"
+#      delegate_to: localhost
+#      register: playbooks_content
+#
+#    - name: export - git - load requirements
+#      ansible.builtin.slurp:
+#        src: "{{ playbook_dir }}/roles/requirements.yml"
+#      delegate_to: localhost
+#      register: requirements_content
+#
+#    - name: export - git - cocatentate the lists
+#      ansible.builtin.set_fact:
+#        git_repos: "{{
+#          playbooks_content['content'] | b64decode | from_yaml + 
+#          requirements_content['content'] | b64decode | from_yaml
+#          }}"
+#
+#    - name: export - git - create tempdir for caching
+#      ansible.builtin.file:
+#        path: /tmp/export/git
+#        state: directory
+#        mode: 0777
+#
+#    - name: export - git - create user ssh directory
+#      ansible.builtin.file:
+#        path: /tmp/semaphore/.ssh
+#        state: directory
+#
+#    - name: export - git - deploy temporary keyfile
+#      ansible.builtin.copy:
+#        content: "{{ gh_ssh_key }}"
+#        dest: "{{ keyFilePath }}"
+#        mode: 0600
+#
+#    - name: export - git - clone repositories
+#      ansible.builtin.git:
+#        repo: "{{ item.src }}"
+#        #version: "{{ item.version }}"
+#        dest: "/tmp/export/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
+#        accept_hostkey: yes
+#        key_file: "{{ keyFilePath }}"
+#        clone: true
+#        force: true
+#        update: true
+#      with_items: "{{ git_repos }}"
+#      when: item.scm == 'git'
+#
+#    - name: export - git - remove private key
+#      ansible.builtin.file:
+#        path: "{{ keyFilePath }}"
+#        state: absent
+#
+#    - name: export - git - change remote url
+#      ansible.builtin.replace:
+#        path: "/tmp/export/git/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}/.git/config"
+#        regexp: "{{ item.src }}"
+#        replace: "{{ gitlab_remote_prefix }}/{{ item.src | regex_replace('^.*/', '') | replace('.git', '') }}"
+#      with_items: "{{ git_repos }}"
+#      when: item.scm == 'git'
+#
+#    - name: export - storage - gather facts
+#      ansible.builtin.setup:
+#        gather_subset:
+#          - mounts
+#
+#    - name: export - storage - check for target device
+#      stat:
+#        path: /dev/disk/by-uuid/{{ storage_uuid }}
+#      register: storage_device
+#
+#    - name: export - storage determine mount
+#      set_fact:
+#        storage_mnt_usermount: yes
+#      with_items: "{{ ansible_mounts }}"
+#      when: item.uuid == storage_uuid
+#
+#    - name: export - storage - unmount usermount
+#      ansible.builtin.shell: "sudo umount /dev/disk/by-uuid/{{ storage_uuid }}"
+#      when: storage_mnt_usermount
+#
+#    - name: export - storage - mount
+#      ansible.builtin.shell: "sudo mount /dev/disk/by-uuid/{{ storage_uuid }} /mnt"
+#      when: storage_device.stat.exists
+#
+#    - name: export - storage - create infra export dir
+#      ansible.builtin.file:
+#        path: "mnt/infra"
+#        state: directory
+#        mode: 0777
+#      when: storage_device.stat.exists
+#
+#    - name: export - git - create compressed export archive
+#      ansible.builtin.archive:
+#        path:
+#          - /tmp/export/git
+#        dest: /mnt/infra/trans_infra.tgz
+#      when: storage_device.stat.exists
+#
+#    - name: export - storage - unmount
+#      ansible.builtin.shell: "sudo umount /mnt"
+#      when: storage_device.stat.exists
+#
+#    - name: export - git - cleanup
+#      ansible.builtin.file:
+#        path: /tmp/export/git
+#        state: absent
+#
