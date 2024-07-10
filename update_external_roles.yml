@@ -20,8 +20,11 @@
         dest: "{{ keyFilePath }}"
         mode: 0600
 
-    - name: reload external roles
+    - name: reload external roles from requirements
       ansible.builtin.shell: 'export HOME=/tmp/semaphore; ansible-galaxy install -r roles/requirements.yml --force'
+
+    - name: reload external roles from playbooks
+      ansible.builtin.shell: 'export HOME=/tmp/semaphore; ansible-galaxy install -r files/playbook.yml --force'
 
     - name: export - git - remove private key
       ansible.builtin.file:
