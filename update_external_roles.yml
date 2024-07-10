@@ -7,6 +7,9 @@
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
     keyFilePath: "/tmp/semaphore/.ssh/gh_ansible-globals"
 
+  vars_files:
+    - /var/lib/semaphore/data/sec.yml
+
   pre_tasks:
 
     - name: export - git - create user ssh directory
