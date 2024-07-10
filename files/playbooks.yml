@@ -1,4 +1,4 @@
-- src: "git@github.com:peedy2495/sem_globals.git"
+- src: "git+ssh://git@github.com:peedy2495/sem_globals.git"
   scm: git
   version: main
 
