@@ -5,5 +5,5 @@
   scm: git
   version: main
 
-- src: git+ssh://git@github.com/peedy2495/ansible-export_airgappeed.git
+- src: git+ssh://git@github.com/peedy2495/ansible-export_airgapped.git
   version: main
