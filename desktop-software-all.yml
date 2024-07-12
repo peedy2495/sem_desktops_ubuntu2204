@@ -17,6 +17,9 @@
     # role: ansible-role-clamav
     clamav_offlinedb: yes
     clamav_freshclam_daemon_state: stopped
+
+  vars_files:
+    - /var/lib/semaphore/data/sec.yml
     
   roles:
     - role: sem_globals

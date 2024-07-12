@@ -4,6 +4,8 @@
     # ssh stuff
     ansible_become: yes
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
+  vars_files:
+    - /var/lib/semaphore/data/sec.yml
 
   roles:
     - role: sem_globals
