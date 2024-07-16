@@ -14,6 +14,8 @@
     unhide: true
     shelldetector: false
 
+    aide_db_build: false
+
     # role: ansible-role-clamav
     clamav_offlinedb: yes
     clamav_freshclam_daemon_state: stopped
