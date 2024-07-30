@@ -43,3 +43,7 @@
       ansible.builtin.file:
         path: "{{ keyFilePath }}"
         state: absent
+
+    - name: Show role paths
+      debug:
+        msg: "{{ lookup('config', 'DEFAULT_ROLES_PATH') }}"
