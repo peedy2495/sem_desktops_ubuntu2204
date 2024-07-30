@@ -1,3 +1,31 @@
+- name: Aufgaben auf localhost ausführen
+  hosts: localhost
+  become: false 
+  tasks:
+
+    - name: export - git - load playbooks
+      ansible.builtin.slurp:
+        src: "{{ playbook_dir }}/files/playbooks.yml"
+      delegate_to: localhost
+      become: false
+      register: playbooks_content
+    
+    - name: export - git - load requirements
+      ansible.builtin.slurp:
+        src: "{{ playbook_dir }}/roles/requirements.yml"
+      delegate_to: localhost
+      become: false
+      register: requirements_content
+    
+    - name: export - git - cocatentate the lists
+      ansible.builtin.set_fact:
+        git_repos: "{{
+          playbooks_content['content'] | b64decode | from_yaml +
+          requirements_content['content'] | b64decode | from_yaml
+          }}"
+
+
+
 - hosts: all
   gather_facts: yes
   vars:
