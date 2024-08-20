@@ -20,6 +20,9 @@
     clamav_offlinedb: yes
     clamav_freshclam_daemon_state: stopped
 
+    luksPartition: /dev/vda3
+    luksKeyFile: /boot/keyfile
+
   vars_files:
     - /var/lib/semaphore/data/sec.yml
     
@@ -33,3 +36,32 @@
     - role: ansible-antirootkits
     - role: ansible-role-clamav
     - role: ansible-hardening-addition
+
+  tasks:
+    - name: remove keybased decryption of a luks partition 
+      block:
+        - name: remove keybased decryption of a luks partition - remove keyfile
+          ansible.builtin.file:
+            path: "{{ luksKeyFile }}"
+            state: absent
+
+        - name: remove keybased decryption of a luks partition - modify crypttab
+          ansible.builtin.replace:
+            path: /etc/crypttab
+            regexp: "{{ luksKeyFile }}"
+            replace: "none"
+
+        - name: remove keybased decryption of a luks partition - modify initramfs conf-hook
+          ansible.builtin.lineinfile:
+            path: /target/etc/cryptsetup-initramfs/conf-hook
+            regexp: "KEYFILE_PATTERN={{ luksKeyFile }}"
+            state: absent
+
+        - name: remove keybased decryption of a luks partition - update initramfs
+          ansible.builtin.shell: "update-initramfs -u"
+      tags: wip
+
+    - name: Finished - Reboot
+      reboot:
+        reboot_timeout: 600
+      tags: wip
