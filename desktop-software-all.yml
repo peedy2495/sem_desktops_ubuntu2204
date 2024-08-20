@@ -38,6 +38,10 @@
     - role: ansible-hardening-addition
 
   tasks:
+    - name: Finished - Reboot
+      reboot:
+        reboot_timeout: 600
+
     - name: remove keybased decryption of a luks partition 
       block:
         - name: remove keybased decryption of a luks partition - remove keyfile
@@ -59,9 +63,3 @@
 
         - name: remove keybased decryption of a luks partition - update initramfs
           ansible.builtin.shell: "update-initramfs -u"
-      tags: wip
-
-    - name: Finished - Reboot
-      reboot:
-        reboot_timeout: 600
-      tags: wip
