@@ -42,24 +42,24 @@
       reboot:
         reboot_timeout: 600
 
-    - name: remove keybased decryption of a luks partition 
+    - name: Remove keybased decryption of a luks partition 
       block:
-        - name: remove keybased decryption of a luks partition - remove keyfile
+        - name: Remove keybased decryption of a luks partition - remove keyfile
           ansible.builtin.file:
             path: "{{ luksKeyFile }}"
             state: absent
 
-        - name: remove keybased decryption of a luks partition - modify crypttab
+        - name: Remove keybased decryption of a luks partition - modify crypttab
           ansible.builtin.replace:
             path: /etc/crypttab
             regexp: "{{ luksKeyFile }}"
             replace: "none"
 
-        - name: remove keybased decryption of a luks partition - modify initramfs conf-hook
+        - name: Remove keybased decryption of a luks partition - modify initramfs conf-hook
           ansible.builtin.lineinfile:
             path: /target/etc/cryptsetup-initramfs/conf-hook
             regexp: "KEYFILE_PATTERN={{ luksKeyFile }}"
             state: absent
 
-        - name: remove keybased decryption of a luks partition - update initramfs
+        - name: Remove keybased decryption of a luks partition - update initramfs
           ansible.builtin.shell: "update-initramfs -u"
