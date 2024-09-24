@@ -66,3 +66,16 @@
 
         - name: Remove keybased decryption of a luks partition - update initramfs
           ansible.builtin.shell: "update-initramfs -u"
+
+    - name: Remove login screen installation warning frame
+      block: 
+      - name: Remove logo from gdm greeter config
+        ansible.builtin.lineinfile:
+          path: /etc/gdm3/greeter.dconf-defaults
+          regexp: '^logo='
+          state: absent
+
+      - name: Reload the gdm greeter
+        systemd:
+          name: gdm
+          state: reloaded
