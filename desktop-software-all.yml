@@ -75,7 +75,7 @@
           regexp: '^logo='
           state: absent
 
-      - name: Reload the gdm greeter
+      - name: Restart the gdm greeter
         systemd:
           name: gdm
-          state: reloaded
+          state: restarted
