@@ -47,6 +47,7 @@
         - name: Remove  keybased decryption of a luks partition - remove keyslot
           ansible.builtin.shell: "cryptsetup luksRemoveKey {{ luksPartition }} {{ luksKeyFile }}"
           ignore_errors: true
+          register: rm_keyslot
 
         - name: Remove keybased decryption of a luks partition - remove keyfile
           ansible.builtin.file:
@@ -67,6 +68,7 @@
 
         - name: Remove keybased decryption of a luks partition - update initramfs
           ansible.builtin.shell: "update-initramfs -u"
+          when: rm_keyslot is not failed
 
     - name: Remove login screen installation warning frame
       block: 
