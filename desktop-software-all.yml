@@ -45,7 +45,8 @@
     - name: Remove keybased decryption of a luks partition 
       block:
         - name: Remove  keybased decryption of a luks partition - remove keyslot
-          ansible.builtin.shell: "cryptsetup luksRemoveKey {{ luksPartition }} {{ luksKeyFile }}"            
+          ansible.builtin.shell: "cryptsetup luksRemoveKey {{ luksPartition }} {{ luksKeyFile }}"
+          ignore_errors: true
 
         - name: Remove keybased decryption of a luks partition - remove keyfile
           ansible.builtin.file:
