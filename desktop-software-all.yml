@@ -32,7 +32,7 @@
         content: "hubba"
         dest: ./test.txt
       delegate_to: localhost
-      become: false
+      become_user: semaphore
 
   roles:
     - role: sem_globals
