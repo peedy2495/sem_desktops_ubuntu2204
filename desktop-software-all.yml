@@ -25,15 +25,13 @@
 
   vars_files:
     - /var/lib/semaphore/data/sec.yml
-  
-
+    
   pre_tasks:
-    - name: List current directory content
-      local_action: command ls -la
-      register: directory_listing
-
     - name: Write "hubba" to test.txt
-      local_action: copy content="hubba" dest=./test.txt
+      copy:
+        content: "hubba"
+        dest: ./test.txt
+      delegate_to: localhost
 
   roles:
     - role: sem_globals
