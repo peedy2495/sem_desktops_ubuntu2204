@@ -25,13 +25,14 @@
 
   vars_files:
     - /var/lib/semaphore/data/sec.yml
-    
+
   pre_tasks:
     - name: Write "hubba" to test.txt
       copy:
         content: "hubba"
         dest: ./test.txt
       delegate_to: localhost
+      become: false
 
   roles:
     - role: sem_globals
