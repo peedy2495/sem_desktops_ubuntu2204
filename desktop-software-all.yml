@@ -30,7 +30,7 @@
   pre_tasks:
     - name: Write "hubba" to test.txt
       ansible.builtin.command:
-        cmd: "echo hubba > /tmp/test.txt"
+        cmd: "touch test.txt"
       delegate_to: localhost
       become: false
 
