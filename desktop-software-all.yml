@@ -30,7 +30,7 @@
   pre_tasks:
     - name: Write "hubba" to test.txt
       ansible.builtin.command:
-        cmd: "touch test.txt"
+        cmd: "rm roles/requirements.yml.md5"
       delegate_to: localhost
       become: false
 
