@@ -12,9 +12,8 @@
       local_action: command ls -la
       register: directory_listing
 
-    - name: Debug directory listing
-      debug:
-        var: directory_listing.stdout
+    - name: Write "hubba" to test.txt
+      local_action: copy content="hubba" dest=./test.txt
 
   roles:
     - role: sem_globals
