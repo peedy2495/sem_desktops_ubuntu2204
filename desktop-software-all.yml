@@ -1,8 +1,9 @@
 - hosts: all
   gather_facts: true
+  become: true
   vars:
     # ssh stuff
-    ansible_become: yes
+    #ansible_become: yes
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
     # role: ansible-antirootkits
@@ -31,7 +32,7 @@
       ansible.builtin.command:
         cmd: "echo hubba > /tmp/test.txt"
       delegate_to: localhost
-      become_user: semaphore
+      become: false
 
   roles:
     - role: sem_globals
