@@ -28,9 +28,8 @@
 
   pre_tasks:
     - name: Write "hubba" to test.txt
-      copy:
-        content: "hubba"
-        dest: ./test.txt
+      ansible.builtin.command:
+        cmd: "echo hubba > /tmp/test.txt"
       delegate_to: localhost
       become_user: semaphore
 
