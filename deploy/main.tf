@@ -63,8 +63,9 @@ resource "proxmox_vm_qemu" "test_server" {
   
     # CD-ROM Laufwerk mit ISO-Datei aus dem lokalen Storage
   cdrom {
-    storage = "local"
-    file    = "iso/ubuntu-24.04.1-live-server-amd64.iso"
+    enabled = true
+    file_id    = "local:iso/ubuntu-24.04.1-live-server-amd64.iso"
+    interface = "ide2"
   }
 
   # if you want two NICs, just copy this whole network section and duplicate it
