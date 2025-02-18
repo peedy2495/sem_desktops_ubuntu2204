@@ -65,7 +65,6 @@ resource "proxmox_vm_qemu" "test_server" {
         disk {
           size    = "10G"
           storage = "local-zfs"
-          iothread = 1
         }
       }
     }
@@ -73,8 +72,11 @@ resource "proxmox_vm_qemu" "test_server" {
 
   # if you want two NICs, just copy this whole network section and duplicate it
   network {
+    id = 0
     model = "virtio"
     bridge = "vmbr0"
+    firewall : false
+    link_down : false
   }
 
   # not sure exactly what this is for. presumably something about MAC addresses and ignore network changes during the life of the VM
