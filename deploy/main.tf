@@ -75,8 +75,8 @@ resource "proxmox_vm_qemu" "test_server" {
     id = 0
     model = "virtio"
     bridge = "vmbr0"
-    firewall : false
-    link_down : false
+    firewall = false
+    link_down = false
   }
 
   # not sure exactly what this is for. presumably something about MAC addresses and ignore network changes during the life of the VM
