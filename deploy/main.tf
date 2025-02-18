@@ -9,7 +9,7 @@ terraform {
 
 provider "proxmox" {
   # url is the hostname (FQDN if you have one) for the proxmox host you'd like to connect to to issue the commands. my proxmox host is 'prox-1u'. Add /api2/json at the end for the API
-  pm_api_url = "https://192.168.122.72:8006/api2/json"
+  pm_api_url = "https://192.168.124.2:8006/api2/json"
 
   # api token id is in the form of: <username>@pam!<tokenId>
   pm_api_token_id = "root@pam!semaphore"
@@ -48,7 +48,7 @@ resource "proxmox_vm_qemu" "test_server" {
   os_type = "cloud-init"
   cores = 2
   sockets = 1
-  cpu = "host"
+  cpu_type = "host"
   memory = 2048
   scsihw = "virtio-scsi-pci"
 
