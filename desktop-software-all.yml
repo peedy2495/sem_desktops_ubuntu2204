@@ -28,7 +28,7 @@
     - /var/lib/semaphore/data/sec.yml
 
   pre_tasks:
-    - name: Write "hubba" to test.txt
+    - name: Semaphore - remove requirements hash file for forcing a new requirements download
       ansible.builtin.command:
         cmd: "rm roles/requirements.yml.md5"
       delegate_to: localhost
