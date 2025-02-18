@@ -52,20 +52,23 @@ resource "proxmox_vm_qemu" "test_server" {
   memory = 2048
   scsihw = "virtio-scsi-pci"
 
-  disk {
-    slot = 0
-    # set disk size here. leave it small for testing because expanding the disk takes time.
-    size = "10G"
-    type = "scsi"
-    storage = "local-zfs"
-    iothread = 1
-  }
-  
-    # CD-ROM Laufwerk mit ISO-Datei aus dem lokalen Storage
-  cdrom {
-    enabled = true
-    file_id    = "local:iso/ubuntu-24.04.1-live-server-amd64.iso"
-    interface = "ide2"
+  disks {
+    ide {
+      ide0 {
+        cdrom {
+          iso = "ubuntu-24.04.1-live-server-amd64.iso"
+        }
+      }
+    }
+    scsi {
+      scsi0 {
+        disk {
+          size    = "10G"
+          storage = "local-zfs"
+          iothread = 1
+        }
+      }
+    }
   }
 
   # if you want two NICs, just copy this whole network section and duplicate it
