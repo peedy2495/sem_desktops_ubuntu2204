@@ -64,7 +64,7 @@ resource "proxmox_vm_qemu" "test_server" {
       scsi0 {
         disk {
           size    = "10G"
-          storage = "local-zfs"
+          storage = "local-lvm"
         }
       }
     }
