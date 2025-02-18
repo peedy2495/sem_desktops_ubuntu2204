@@ -41,7 +41,6 @@ resource "proxmox_vm_qemu" "test_server" {
   cpu = "host"
   memory = 2048
   scsihw = "virtio-scsi-pci"
-  bootdisk = "scsi0"
 
   disk {
     slot = 0
