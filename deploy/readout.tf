@@ -3,7 +3,7 @@ data "http" "vm_info" {
   request_headers = {
     Authorization = "PVEAPIToken=root@pam!semaphore=${var.api_token}"
   }
-  skip_tls_verify = true
+  tls_server_name = "192.168.124.72"
 }
 
 output "vm_info" {
