@@ -31,6 +31,11 @@ variable "ssh_key" {
   sensitive   = true  # Optional: mark as sensitive if needed
 }
 
+variable "ci_user_password" {
+  description = "administrative password"
+  sensitive   = true  # Optional: mark as sensitive if needed
+}
+
 # resource is formatted to be "[type]" "[entity_name]" so in this case
 # we are looking to create a proxmox_vm_qemu entity named test_server
 resource "proxmox_vm_qemu" "test_server" {
