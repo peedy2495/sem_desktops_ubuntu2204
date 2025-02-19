@@ -58,7 +58,7 @@ resource "proxmox_vm_qemu" "test_server" {
     ide {
       ide0 {
         cdrom {
-          iso = "ubuntu-24.04.1-live-server-amd64.iso"
+          iso = "local:iso/ubuntu-24.04.1-live-server-amd64.iso"
         }
       }
     }
