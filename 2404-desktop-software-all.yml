@@ -6,6 +6,8 @@
     #ansible_become: yes
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
+    nexus_name: nexus-c2
+
     # role: ansible-antirootkits
     antirootkits_mail_from: "root@localhost"
     antirootkits_mail_to: "root@localhost"
