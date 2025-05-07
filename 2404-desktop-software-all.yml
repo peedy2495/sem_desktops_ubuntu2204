@@ -1,0 +1,94 @@
+- hosts: all
+  gather_facts: true
+  become: true
+  vars:
+    # ssh stuff
+    #ansible_become: yes
+    ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
+
+    # role: ansible-antirootkits
+    antirootkits_mail_from: "root@localhost"
+    antirootkits_mail_to: "root@localhost"
+
+    rkhunter: true
+    chkrootkit: true
+    unhide: true
+    shelldetector: false
+
+    aide_db_build: false
+
+    # role: ansible-role-clamav
+    clamav_offlinedb: yes
+    clamav_freshclam_daemon_state: stopped
+
+    ssh_service_name: ssh
+
+    luksPartition: /dev/vda3
+    luksKeyFile: /boot/keyfile
+
+  vars_files:
+    - /var/lib/semaphore/data/sec.yml
+
+  pre_tasks:
+    - name: Semaphore - remove requirements hash file for forcing a new requirements download
+      ansible.builtin.command:
+        cmd: "rm roles/requirements.yml.md5"
+      delegate_to: localhost
+      become: false
+
+  roles:
+    - role: sem_globals
+    - role: ansible-nexus-repositories
+    - role: ansible-ldap-sssd
+    - role: ansible-gfx
+    - role: ansible-desktop-default-software
+    - role: ansible-desktop-developer-software
+    - role: ansible-antirootkits
+    - role: ansible-role-clamav
+    - role: ansible-hardening-addition
+
+  tasks:
+    - name: Finished - Reboot
+      reboot:
+        reboot_timeout: 600
+
+    - name: Remove keybased decryption of a luks partition 
+      block:
+        - name: Remove  keybased decryption of a luks partition - remove keyslot
+          ansible.builtin.shell: "cryptsetup luksRemoveKey {{ luksPartition }} {{ luksKeyFile }}"
+          ignore_errors: true
+          register: rm_keyslot
+
+        - name: Remove keybased decryption of a luks partition - remove keyfile
+          ansible.builtin.file:
+            path: "{{ luksKeyFile }}"
+            state: absent
+
+        - name: Remove keybased decryption of a luks partition - modify crypttab
+          ansible.builtin.replace:
+            path: /etc/crypttab
+            regexp: "{{ luksKeyFile }}"
+            replace: "none"
+
+        - name: Remove keybased decryption of a luks partition - modify initramfs conf-hook
+          ansible.builtin.lineinfile:
+            path: /target/etc/cryptsetup-initramfs/conf-hook
+            regexp: "KEYFILE_PATTERN={{ luksKeyFile }}"
+            state: absent
+
+        - name: Remove keybased decryption of a luks partition - update initramfs
+          ansible.builtin.shell: "update-initramfs -u"
+          when: rm_keyslot is not failed
+
+    - name: Remove login screen installation warning frame
+      block: 
+      - name: Remove logo from gdm greeter config
+        ansible.builtin.lineinfile:
+          path: /etc/gdm3/greeter.dconf-defaults
+          regexp: '^logo='
+          state: absent
+
+      - name: Restart the gdm greeter
+        systemd:
+          name: gdm
+          state: restarted
