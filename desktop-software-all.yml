@@ -29,7 +29,7 @@
     luksKeyFile: /boot/keyfile
 
     appadd_ungoogled_chromium: false
-    appadd_google-chrome: true
+    appadd_google_chrome: true
     appadd_ppa_qgis: true
     appadd_qgis: false
 

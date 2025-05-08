@@ -11,7 +11,7 @@
     nexus_proto: http
 
     appadd_ungoogled_chromium: true
-    appadd_google-chrome: false
+    appadd_google_chrome: false
     appadd_ppa_qgis: false
     appadd_qgis: true
 
