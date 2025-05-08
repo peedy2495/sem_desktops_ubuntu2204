@@ -30,8 +30,8 @@
 
     appadd_ungoogled_chromium: false
     appadd_google-chrome: true
-    appadd_ppa_qgis: false
-    appadd_qgis: true
+    appadd_ppa_qgis: true
+    appadd_qgis: false
 
   vars_files:
     - /var/lib/semaphore/data/sec.yml
