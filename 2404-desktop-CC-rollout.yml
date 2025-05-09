@@ -6,6 +6,7 @@
     #ansible_become: yes
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
+    nexus: true
     nexus_host: nexus-c2
     nexus_port: 8081
     nexus_proto: http
@@ -16,7 +17,9 @@
     appadd_qgis: true
 
     mitogen: false
-    ansible_major_version: 12
+    ansible_major_version: 11
+
+    pipy_proxy_use: true
 
     # role: ansible-antirootkits
     antirootkits_mail_from: "root@localhost"
