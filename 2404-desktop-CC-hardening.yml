@@ -6,9 +6,17 @@
     #ansible_become: yes
     ansible_ssh_common_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no"
 
-    nexus_host: ubuntu-proxy
+    nexus_host: nexus-c2
     nexus_port: 8081
     nexus_proto: http
+
+    appadd_ungoogled_chromium: true
+    appadd_google_chrome: false
+    appadd_ppa_qgis: false
+    appadd_qgis: true
+
+    mitogen: false
+    ansible_version: 12
 
     # role: ansible-antirootkits
     antirootkits_mail_from: "root@localhost"
@@ -22,20 +30,13 @@
     aide_db_build: false
 
     # role: ansible-role-clamav
-    clamav_offlinedb: yes
+    clamav_offlinedb: no
     clamav_freshclam_daemon_state: stopped
+
+    ssh_service_name: ssh
 
     luksPartition: /dev/vda3
     luksKeyFile: /boot/keyfile
-
-    appadd_ungoogled_chromium: false
-    appadd_google_chrome: true
-    appadd_ppa_qgis: true
-    appadd_qgis: false
-
-    mitogen: true
-    mitogen_version: 0.3.4
-    ansible_version: 6
 
   vars_files:
     - /var/lib/semaphore/data/sec.yml
@@ -50,7 +51,6 @@
   roles:
     - role: sem_globals
     - role: ansible-nexus-repositories
-    - role: ansible-ldap-sssd
     - role: ansible-gfx
     - role: ansible-desktop-default-software
     - role: ansible-desktop-developer-software
