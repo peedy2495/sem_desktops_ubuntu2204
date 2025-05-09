@@ -16,7 +16,7 @@
     appadd_qgis: true
 
     mitogen: false
-    ansible_version: 12
+    ansible_major_version: 12
 
     # role: ansible-antirootkits
     antirootkits_mail_from: "root@localhost"

@@ -35,7 +35,7 @@
 
     mitogen: true
     mitogen_version: 0.3.4
-    ansible_version: 6
+    ansible_major_version: 6
 
   vars_files:
     - /var/lib/semaphore/data/sec.yml
