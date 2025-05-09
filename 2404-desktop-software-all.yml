@@ -16,7 +16,7 @@
     appadd_qgis: true
 
     mitogen: false
-    ansible_major_version: 12
+    ansible_major_version: 11
 
     pipy_proxy_use: true
 
