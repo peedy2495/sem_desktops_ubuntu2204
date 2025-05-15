@@ -37,7 +37,7 @@
     clamav_freshclam_daemon_state: stopped
 
     ssh_service_name: ssh
-    
+
     luksKeyFile: /boot/keyfile
 
     # harware issues with modern laptops - dont't remove extra modules
@@ -68,7 +68,7 @@
       reboot:
         reboot_timeout: 600
 
-    - name: Determine the system storage device
+    - name: Determine the LUKS device
       ansibele.buitltin.shell:  |
         lsblk -o NAME,FSTYPE|grep crypto_LUKS |cut -d' ' -f1 |tr -d '─'
       register: luks_device
