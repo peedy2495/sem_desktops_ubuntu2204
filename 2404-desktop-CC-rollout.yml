@@ -113,3 +113,8 @@
         systemd:
           name: gdm
           state: restarted
+    
+    - name: final reboot
+      reboot:
+        reboot_timeout: 10
+      ignore_errors: true
