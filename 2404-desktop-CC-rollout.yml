@@ -37,8 +37,7 @@
     clamav_freshclam_daemon_state: stopped
 
     ssh_service_name: ssh
-
-    luksPartition: /dev/vda3
+    
     luksKeyFile: /boot/keyfile
 
     # harware issues with modern laptops - dont't remove extra modules
@@ -69,10 +68,15 @@
       reboot:
         reboot_timeout: 600
 
+    - name: Determine the system storage device
+      ansibele.buitltin.shell:  |
+        lsblk -o NAME,FSTYPE|grep crypto_LUKS |cut -d' ' -f1 |tr -d '─'
+      register: luks_device
+
     - name: Remove keybased decryption of a luks partition 
       block:
         - name: Remove  keybased decryption of a luks partition - remove keyslot
-          ansible.builtin.shell: "cryptsetup luksRemoveKey {{ luksPartition }} {{ luksKeyFile }}"
+          ansible.builtin.shell: "cryptsetup luksRemoveKey {{ luks_device }}3 {{ luksKeyFile }}"
           ignore_errors: true
           register: rm_keyslot
 
