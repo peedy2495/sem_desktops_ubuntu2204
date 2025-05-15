@@ -69,7 +69,7 @@
         reboot_timeout: 600
 
     - name: LUKS - Determine the LUKS device
-      ansibele.buitltin.shell:  |
+      ansible.builtin.shell:  |
         lsblk -o NAME,FSTYPE|grep crypto_LUKS |cut -d' ' -f1 |tr -d '─'
       register: luks_device
 
