@@ -41,6 +41,9 @@
     luksPartition: /dev/vda3
     luksKeyFile: /boot/keyfile
 
+    # harware issues with modern laptops - dont't remove extra modules
+    remove_extra_modules: false
+
   vars_files:
     - /var/lib/semaphore/data/sec.yml
 
