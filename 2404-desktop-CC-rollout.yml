@@ -59,7 +59,7 @@
     - role: ansible-antirootkits
     - role: ansible-role-clamav
     - role: ansible-hardening-addition
-    #- role: ansible-gfx
+    - role: ansible-gfx
     - role: ansible-desktop-default-software
     #- role: ansible-desktop-developer-software
 
