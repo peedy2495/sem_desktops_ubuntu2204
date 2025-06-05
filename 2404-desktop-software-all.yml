@@ -37,7 +37,6 @@
 
     ssh_service_name: ssh
 
-    luksPartition: /dev/vda3
     luksKeyFile: /boot/keyfile
 
   vars_files:
@@ -53,44 +52,49 @@
   roles:
     - role: sem_globals
     - role: ansible-nexus-repositories
-    - role: ansible-ldap-sssd
-    - role: ansible-gfx
-    - role: ansible-desktop-default-software
-    - role: ansible-desktop-developer-software
     - role: ansible-antirootkits
     - role: ansible-role-clamav
     - role: ansible-hardening-addition
+    - role: ansible-gfx
+    - role: ansible-desktop-default-software
+    - role: ansible-ldap-sssd
+    - role: ansible-desktop-developer-software
 
   tasks:
     - name: Finished - Reboot
       reboot:
         reboot_timeout: 600
 
-    - name: Remove keybased decryption of a luks partition 
+    - name: LUKS - Determine the LUKS device
+      ansible.builtin.shell:  |
+        lsblk -o NAME,FSTYPE|grep crypto_LUKS |cut -d' ' -f1 |tr -d '─'
+      register: luks_device
+
+    - name: LUKS - Remove keybased decryption of a luks partition 
       block:
-        - name: Remove  keybased decryption of a luks partition - remove keyslot
-          ansible.builtin.shell: "cryptsetup luksRemoveKey {{ luksPartition }} {{ luksKeyFile }}"
+        - name: LUKS - Remove  keybased decryption of a luks partition - remove keyslot
+          ansible.builtin.shell: "cryptsetup luksRemoveKey /dev/{{ luks_device.stdout }} {{ luksKeyFile }}"
           ignore_errors: true
           register: rm_keyslot
 
-        - name: Remove keybased decryption of a luks partition - remove keyfile
+        - name: LUKS - Remove keybased decryption of a luks partition - remove keyfile
           ansible.builtin.file:
             path: "{{ luksKeyFile }}"
             state: absent
 
-        - name: Remove keybased decryption of a luks partition - modify crypttab
+        - name: LUKS - Remove keybased decryption of a luks partition - modify crypttab
           ansible.builtin.replace:
             path: /etc/crypttab
             regexp: "{{ luksKeyFile }}"
             replace: "none"
 
-        - name: Remove keybased decryption of a luks partition - modify initramfs conf-hook
+        - name: LUKS - Remove keybased decryption of a luks partition - modify initramfs conf-hook
           ansible.builtin.lineinfile:
             path: /target/etc/cryptsetup-initramfs/conf-hook
             regexp: "KEYFILE_PATTERN={{ luksKeyFile }}"
             state: absent
 
-        - name: Remove keybased decryption of a luks partition - update initramfs
+        - name: LUKS - Remove keybased decryption of a luks partition - update initramfs
           ansible.builtin.shell: "update-initramfs -u"
           when: rm_keyslot is not failed
 
@@ -106,3 +110,8 @@
         systemd:
           name: gdm
           state: restarted
+    
+    - name: final reboot
+      reboot:
+        reboot_timeout: 10
+      ignore_errors: true
